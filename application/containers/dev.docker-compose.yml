@@ -1,0 +1,12 @@
+services:
+
+  devenv-api:
+    build:
+      context: ../..
+      dockerfile: application/containers/fastapi.Dockerfile
+#    env_file:
+#      - ../../env/dev.env
+    volumes:
+      - ../../application/src:/var/www/
+    ports:
+      - '80:80'
