@@ -1,7 +1,7 @@
 MAKEFLAGS += --no-print-directory
 .PHONY: app-start app-ps app-stats app-finish kill-project-app cloud-init-aws cloud-upgrade-aws \
-		cloud-validate-aws cloud-plan-aws cloud-start-aws cloud-start-aws-ci cloud-finish-aws \
-		cloud-list-state cloud-remove-state-all cloud-logs cloud-logs-follow
+		cloud-validate-aws cloud-plan-aws cloud-start-aws cloud-finish-aws cloud-list-state \
+		cloud-remove-state-all cloud-logs cloud-logs-follow github-actions-cloud-start-aws
 
 -include env/dev.env
 
@@ -39,9 +39,6 @@ cloud-plan-aws:
 cloud-start-aws:
 	@cd terraform/aws && terraform apply -var-file="../../env/prod.tfvars" -auto-approve
 
-cloud-start-aws-ci:
-	@cd terraform/aws && terraform apply -auto-approve
-
 cloud-finish-aws:
 	@cd terraform/aws && terraform destroy -var-file="../../env/prod.tfvars" -auto-approve
 
@@ -56,3 +53,8 @@ cloud-logs:
 
 cloud-logs-follow:
 
+
+# CI/CD Commands
+
+github-actions-cloud-start-aws:
+	@cd terraform/aws && terraform apply -auto-approve
