@@ -7,8 +7,8 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "konkah-portfolio-terraform-state"
-    key    = "terraform.tfstate"
+    bucket = "konkah-portfolio-terraform-states"
+    key    = "portfolio-terraform.tfstate"
     region = "eu-west-1"
     encrypt = true
   }
