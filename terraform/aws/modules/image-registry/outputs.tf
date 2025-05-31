@@ -10,7 +10,7 @@ output "ecr_repository_url" {
 
 output "ecr_repository_url_version" {
   description = "The full ECR repository URL (with tag)"
-  value       = "${aws_ecr_repository.portfolio_api_container_hub.repository_url}:v3"
+  value       = "${aws_ecr_repository.portfolio_api_container_hub.repository_url}:${var.ECR_APP_VERSION}"
 }
 
 output "ecr_account_id" {

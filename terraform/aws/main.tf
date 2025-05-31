@@ -33,6 +33,7 @@ module "image-registry" {
   ECR_AWS_ZONE_1            = var.AWS_ZONE_1
   ECR_AWS_ZONE_2            = var.AWS_ZONE_2
   ECR_UNTAGGED_IMAGES       = var.UNTAGGED_IMAGES
+  ECR_APP_VERSION           = var.APP_VERSION
 }
 
 module "network" {

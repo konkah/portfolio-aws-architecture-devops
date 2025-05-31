@@ -28,3 +28,8 @@ variable "ECR_UNTAGGED_IMAGES"{
   nullable = false
   default = 1
 }
+
+variable "ECR_APP_VERSION"{
+  type     = string
+  nullable = false
+}

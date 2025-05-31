@@ -43,3 +43,8 @@ variable "UNTAGGED_IMAGES"{
   nullable = false
   default = 1
 }
+
+variable "APP_VERSION"{
+  type     = string
+  nullable = false
+}

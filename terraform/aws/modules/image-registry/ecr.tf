@@ -43,9 +43,9 @@ resource "null_resource" "portfolio_api_docker_packaging" {
 		aws configure set region ${var.ECR_AWS_REGION}
 	    aws ecr get-login-password --region ${var.ECR_AWS_REGION} | docker login --username AWS --password-stdin ${data.aws_caller_identity.portfolio_api_current.account_id}.dkr.ecr.${var.ECR_AWS_REGION}.amazonaws.com
 		docker build -t "${aws_ecr_repository.portfolio_api_container_hub.repository_url}:latest" -f ../../application/containers/fastapi.Dockerfile ../..
-		docker tag "${aws_ecr_repository.portfolio_api_container_hub.repository_url}:latest" "${aws_ecr_repository.portfolio_api_container_hub.repository_url}:v3"
+		docker tag "${aws_ecr_repository.portfolio_api_container_hub.repository_url}:latest" "${aws_ecr_repository.portfolio_api_container_hub.repository_url}:${var.ECR_APP_VERSION}"
 	    docker push "${aws_ecr_repository.portfolio_api_container_hub.repository_url}:latest"
-		docker push "${aws_ecr_repository.portfolio_api_container_hub.repository_url}:v3"
+		docker push "${aws_ecr_repository.portfolio_api_container_hub.repository_url}:${var.ECR_APP_VERSION}"
 	    EOF
 	  }
 	
