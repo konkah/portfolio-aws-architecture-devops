@@ -48,3 +48,14 @@ variable "APP_VERSION"{
   type     = string
   nullable = false
 }
+
+variable "EC2_AMI_ID" {
+  description = "AMI ID for EC2, e.g., Ubuntu Server 22.04 LTS"
+  type        = string
+}
+
+variable "EC2_INSTANCE_TYPE" {
+  description = "EC2 instance type"
+  type        = string
+  default     = "t2.micro"
+}

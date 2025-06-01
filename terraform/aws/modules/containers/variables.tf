@@ -13,11 +13,6 @@ variable "ECS_CONTAINERS_IMAGE_URL"{
   nullable = false
 }
 
-variable "ECS_LB_TARGET_GROUP_ARN"{
-  type     = string
-  nullable = false
-}
-
 variable "ECS_SUBNET_ID_LIST"{
   type     = list(string)
   nullable = false
@@ -25,6 +20,11 @@ variable "ECS_SUBNET_ID_LIST"{
 
 variable "ECS_LB_SECURITY_GROUP_LIST"{
   type     = list(string)
+  nullable = false
+}
+
+variable "ECS_LB_TARGET_GROUP_ARN"{
+  type     = string
   nullable = false
 }
 
