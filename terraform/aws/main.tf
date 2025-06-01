@@ -64,7 +64,7 @@ module "vms" {
   EC2_SUBNET_ID_LIST          = module.networks.vpc_public_subnet_id_list
   EC2_LB_SECURITY_GROUP_LIST  = [module.load-balancers.lb_ec2_security_group_id]
   EC2_LB_TARGET_GROUP_ARN     = module.load-balancers.lb_ec2_target_group_arn
-  EC2_LOG_GROUP_NAME          = module.logs.cloudwatch_log_group_name
+  EC2_LOG_GROUP_NAME          = module.logs.cloudwatch_log_ec2_group_name
 }
 
 module "containers" {
@@ -76,7 +76,7 @@ module "containers" {
   ECS_SUBNET_ID_LIST          = module.networks.vpc_public_subnet_id_list
   ECS_LB_SECURITY_GROUP_LIST  = [module.load-balancers.lb_ecs_security_group_id]
   ECS_LB_TARGET_GROUP_ARN     = module.load-balancers.lb_ecs_target_group_arn
-  ECS_LOG_GROUP_NAME          = module.logs.cloudwatch_log_group_name
+  ECS_LOG_GROUP_NAME          = module.logs.cloudwatch_log_ecs_group_name
 }
 
 module "logs" {

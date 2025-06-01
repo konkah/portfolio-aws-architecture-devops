@@ -8,7 +8,14 @@ resource "aws_alb" "portfolio_api_lb_ec2" {
 resource "aws_security_group" "portfolio_api_lb_ec2_security_group" {
   name   = "portfolio-api-lb-ec2-sg"
   vpc_id = var.LB_VPC_ID
-  
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   ingress {
     from_port   = 80
     to_port     = 80
@@ -28,7 +35,7 @@ resource "aws_lb_target_group" "portfolio_api_lb_ec2_target_group" {
   name        = "portfolio-api-lb-ec2-tg"
   port        = 80
   protocol    = "HTTP"
-  target_type = "ip"
+  target_type = "instance"
   vpc_id      = var.LB_VPC_ID
 }
 

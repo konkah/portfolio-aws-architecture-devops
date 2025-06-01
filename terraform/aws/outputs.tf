@@ -127,6 +127,10 @@ output "ec2_instance_arn" {
   value       = module.vms.ec2_instance_arn
 }
 
+output "ec2_ssh_print_command" {
+  value = module.vms.ec2_ssh_print_command
+}
+
 
 # Containers
 output "ecs_cluster_id" {
@@ -166,12 +170,22 @@ output "ecs_security_group_id" {
 
 
 # Logs
-output "cloudwatch_log_group_name" {
-  description = "Name of the CloudWatch Log Group for ECS task logs"
-  value       = module.logs.cloudwatch_log_group_name
+output "cloudwatch_log_ec2_group_name" {
+  description = "Name of the CloudWatch Log Group for EC2 task logs"
+  value       = module.logs.cloudwatch_log_ec2_group_name
 }
 
-output "cloudwatch_log_group_arn" {
+output "cloudwatch_log_ec2_group_arn" {
+  description = "ARN of the CloudWatch Log Group for EC2 task logs"
+  value       = module.logs.cloudwatch_log_ec2_group_arn
+}
+
+output "cloudwatch_log_ecs_group_name" {
+  description = "Name of the CloudWatch Log Group for ECS task logs"
+  value       = module.logs.cloudwatch_log_ecs_group_name
+}
+
+output "cloudwatch_log_ecs_group_arn" {
   description = "ARN of the CloudWatch Log Group for ECS task logs"
-  value       = module.logs.cloudwatch_log_group_arn
+  value       = module.logs.cloudwatch_log_ecs_group_arn
 }
