@@ -94,5 +94,5 @@ jobs:
       - name: Cloud Init AWS
         run: make cloud-init-aws
 
-      - name: Cloud Start AWS
+      - name: Cloud Finish AWS
         run: make github-actions-cloud-finish-aws
