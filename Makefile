@@ -58,3 +58,6 @@ cloud-logs-follow:
 
 github-actions-cloud-start-aws:
 	@cd terraform/aws && terraform apply -auto-approve
+
+github-actions-cloud-finish-aws:
+	@cd terraform/aws && terraform destroy -auto-approve
