@@ -1,8 +1,8 @@
 # Portfolio AWS Architecture DevOps
 
 Welcome to the **Portfolio AWS Architecture DevOps** repository!
-This project demonstrates a robust, cloud-native infrastructure for deploying a FastAPI application on AWS using Infrastructure as Code (IaC) principles with Terraform.
-It emphasizes scalability, automation, modularity, and best practices for containerized workloads.
+This project demonstrates a robust, cloud-native infrastructure for deploying FastAPI applications on AWS using Infrastructure as Code (IaC) with Terraform.
+The focus is on scalability, automation, modularity, and best practices for both containerized and VM-based workloads.
 
 ---
 
@@ -34,39 +34,40 @@ It emphasizes scalability, automation, modularity, and best practices for contai
 
 ## 📖 About the Project
 
-This repository provides a complete solution for deploying a **FastAPI** application using AWS managed services.
-Everything is automated: from provisioning the cloud infrastructure to building Docker images and running them in ECS Fargate behind a load balancer with centralized log management.
+This repository provides a complete solution for deploying a **FastAPI** application using AWS managed services.  
+Everything is automated: from provisioning cloud infrastructure to building Docker images and running them in both ECS Fargate and EC2 VMs, all behind a load balancer with centralized log management.
 
 ---
 
 ## 🏗️ Architecture Overview
 
-Below is a high-level overview of the infrastructure workflow:
+High-level infrastructure workflow:
 
 1. 👨‍💻 **Developer** pushes code to **GitHub**.
 2. ⚙️ **Terraform** provisions AWS resources:
    - 🐳 **ECR**: Docker image storage
-   - 🚀 **ECS Fargate**: Runs containers
+   - 🚀 **ECS Fargate & EC2**: Containers and VMs for deployment
    - 🌐 **VPC/Subnets/Security Groups**: Networking & security
-   - ☁️ **ALB**: Load balancing to containers
-   - 📊 **CloudWatch**: Centralized logs
-3. 🏗️ Docker images are built & pushed to ECR.
-4. 🚀 ECS Fargate pulls the images and runs the app.
-5. 🌐 ALB routes user requests to the containers.
+   - ☁️ **ALB**: Load balancing for containers and VMs
+   - 📊 **CloudWatch**: Centralized logging
+3. 🏗️ Docker images are built and pushed to ECR.
+4. 🚀 ECS Fargate and/or EC2 pull the images and run the app.
+5. 🌐 ALB routes requests to containers or VMs.
 6. 📊 Logs are collected in CloudWatch.
 
 ---
 
 ## ✨ Features
 
-- **Modular Terraform**: Clean and reusable modules for networking, compute, logging, and containers.
-- **ECS Fargate Deployment**: Serverless containers for simplified ops and scalability.
-- **Elastic Container Registry (ECR)**: Secure storage and lifecycle management for Docker images.
-- **Load Balanced**: Traffic managed by AWS Application Load Balancer (ALB).
-- **Centralized Logging**: All container logs shipped to AWS CloudWatch.
-- **Secure Networking**: Custom VPC, public subnets, managed security groups.
-- **Automation via Makefile**: One-liners for common workflows: plan, apply, destroy, validate, and more.
-- **Production-Ready Dockerfile**: Optimized FastAPI build, dependency management pinned with pip-tools.
+- **Modular Terraform**: Clean and reusable modules for networking, VMs, containers, logging, and image registry.
+- **Deploys to Containers (ECS) and VMs (EC2)**: Flexibility for different workloads.
+- **Elastic Container Registry (ECR)**: Secure Docker image storage.
+- **Application Load Balancer (ALB)**: Managed traffic for containers and VMs.
+- **Centralized Logging**: All logs shipped to CloudWatch.
+- **Secure Networking**: Custom VPC, public subnets, dedicated security groups.
+- **Automation via Makefile**: Streamlined workflows (plan, apply, destroy, validate, etc).
+- **Production-Ready Dockerfile**: Optimized build, dependency management via pip-tools.
+- **CI/CD with GitHub Actions**: Automated testing and continuous deployment.
 
 ---
 
@@ -74,9 +75,9 @@ Below is a high-level overview of the infrastructure workflow:
 
 - **Language:** Python (FastAPI)
 - **Containerization:** Docker
-- **IaC:** Terraform
-- **Cloud:** Amazon Web Services (ECS, ECR, VPC, ALB, CloudWatch)
-- **Automation:** Makefile
+- **Infrastructure as Code:** Terraform
+- **Cloud:** AWS (ECS, EC2, ECR, VPC, ALB, CloudWatch)
+- **Automation:** Makefile, GitHub Actions
 
 ---
 
@@ -95,17 +96,21 @@ portfolio-aws-architecture-devops/
 │       ├── outputs.tf
 │       └── modules/
 │           ├── containers/
-│           ├── image-registry/
+│           ├── image-registries/
 │           ├── logs/
-│           ├── network/
-│           └── load-balancer/
+│           ├── load-balancers/
+│           ├── networks/
+│           └── vms/
 │
 ├── env/
 │   ├── example.env
 │   └── example.tfvars
 │
 ├── docs/
-│   └── aws-policies/         # Example IAM policies required for the project
+│   └── aws-policies/         # Example IAM policies for the project
+│
+├── .github/
+│   └── workflows/            # GitHub Actions CI/CD workflows
 │
 ├── Makefile
 └── README.md
@@ -131,10 +136,10 @@ cp env/example.env env/dev.env
 cp env/example.tfvars env/prod.tfvars
 ```
 
-- Open the copied files (`env/dev.env` and `env/prod.tfvars`) in your text editor and update the variable values with your AWS credentials and configuration.
+- Edit `env/dev.env` and `env/prod.tfvars` with your AWS credentials and configuration.
 
 > **Note:**
-> Do **not** edit the `example.*` files directly. Always copy them to create your own local configuration files and update those copies.
+> Do **not** edit the `example.*` files directly. Always create local copies and update those copies.
 
 ### 3. **Build & Push Docker Image**
 
@@ -146,7 +151,7 @@ make app-start
 
 ### 4. **Provision AWS Infrastructure**
 
-You can provision the AWS infrastructure using either **Makefile commands** (recommended for simplicity) or direct Terraform commands.
+You can provision the AWS infrastructure using **Makefile commands** (recommended) or direct Terraform commands.
 
 #### **Option 1: Using Makefile Commands**
 
@@ -166,11 +171,11 @@ terraform apply -var-file="../../env/prod.tfvars" -auto-approve
 ```
 
 > **Tip:**
-> The Makefile wraps the corresponding Terraform commands for your convenience. Use either method according to your preference!
+> The Makefile wraps the corresponding Terraform commands for your convenience.
 
 ### 5. **Access Your Application**
 
-- Find the output `lb_dns_name` and open in your browser:
+- Find the output `lb_dns_name` and open it in your browser:
   ```
   http://<load-balancer-dns>
   ```
@@ -181,15 +186,15 @@ terraform apply -var-file="../../env/prod.tfvars" -auto-approve
 
 ### Common Makefile Commands
 
-| Command                 | Description                                 |
-|-------------------------|---------------------------------------------|
-| `make app-start`        | Start local app containers with Docker      |
-| `make app-finish`       | Stop and remove containers                  |
-| `make cloud-init-aws`   | Terraform init for AWS                      |
-| `make cloud-plan-aws`   | Terraform plan for AWS                      |
-| `make cloud-start-aws`  | Apply (deploy) AWS infrastructure           |
-| `make cloud-finish-aws` | Destroy all AWS resources                   |
-| `make cloud-validate-aws` | Validate Terraform config                 |
+| Command                     | Description                                    |
+|-----------------------------|------------------------------------------------|
+| `make app-start`            | Start local app containers with Docker         |
+| `make app-finish`           | Stop and remove local containers               |
+| `make cloud-init-aws`       | Initialize Terraform for AWS                   |
+| `make cloud-plan-aws`       | Show Terraform plan for AWS                    |
+| `make cloud-start-aws`      | Apply (deploy) AWS infrastructure              |
+| `make cloud-finish-aws`     | Destroy all AWS infrastructure                 |
+| `make cloud-validate-aws`   | Validate Terraform configuration               |
 
 ---
 
@@ -197,17 +202,10 @@ terraform apply -var-file="../../env/prod.tfvars" -auto-approve
 
 After a successful deployment, Terraform provides:
 
-- **ECR Info:**
-  - URL and repository name for Docker images
-
-- **ECS Info:**
-  - Cluster and service names, task definition ARN
-
-- **Networking:**
-  - VPC ID, public subnet IDs, ALB DNS name
-
-- **Logging:**
-  - CloudWatch Log Group name/ARN
+- **ECR**: URL and repository name for Docker images
+- **ECS/EC2**: Cluster/service names, task definition ARNs, instance IDs
+- **Networking**: VPC ID, subnets, ALB DNS name
+- **Logging**: CloudWatch Log Group name/ARN
 
 Example output:
 ```
@@ -221,13 +219,13 @@ cloudwatch_log_group_name = "portfolio-api-logs"
 ## 🛠️ Customization
 
 - **Application Code:**
-  Edit `application/containers/fastapi.Dockerfile` and source files for your FastAPI logic.
+  Edit `application/containers/fastapi.Dockerfile` and relevant source files for your FastAPI logic.
 
 - **Infrastructure Variables:**
-  Change any Terraform variables in the `env/prod.tfvars` or module variable files.
+  Change values in `env/prod.tfvars` or module variables files.
 
 - **Scaling:**
-  Adjust `desired_count` in ECS, subnet CIDRs, or other capacity settings as needed.
+  Adjust `desired_count` in ECS/EC2 modules, subnet CIDRs, instance types, etc.
 
 ---
 
@@ -237,8 +235,7 @@ The project requires specific AWS IAM permissions for Terraform to provision and
 **Example policy documents** can be found in the [`docs/aws-policies/`](docs/aws-policies/) directory.
 
 > **Important:**
-> Ensure your AWS user or role has permissions as defined in these policy files before running Terraform.
-> Assign only the permissions needed for security best practices.
+> Make sure your AWS user or role has permissions as defined in these policy files before running Terraform.
 
 ---
 
