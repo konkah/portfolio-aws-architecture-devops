@@ -1,7 +1,7 @@
 resource "aws_alb" "portfolio_api_lb_ec2" {
   name               = "portfolio-api-lb-ec2-prod"
   load_balancer_type = "application"
-  subnets            = var.LB_SUBNET_ID_LIST
+  subnets            = var.LB_PUBLIC_SUBNET_ID_LIST
   security_groups    = ["${aws_security_group.portfolio_api_lb_ec2_security_group.id}"]
 }
 

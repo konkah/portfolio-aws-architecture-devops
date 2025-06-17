@@ -48,8 +48,8 @@ resource "aws_ecs_service" "portfolio_api_ecs_service" {
   }
 
   network_configuration {
-    subnets          = var.ECS_SUBNET_ID_LIST
-    assign_public_ip = true     # Provide the containers with public IPs
+    subnets          = var.ECS_PRIVATE_SUBNET_ID_LIST
+    assign_public_ip = false     # Provide the containers with public IPs
     security_groups  = ["${aws_security_group.portfolio_api_security_group.id}"] # Set up the security group
   }
 }

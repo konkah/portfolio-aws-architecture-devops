@@ -39,18 +39,20 @@ module "image-registries" {
 module "networks" {
   source     = "./modules/networks"
 
-  VPC_IP            = var.VPC_IP
-  VPC_AWS_ZONE_1    = var.AWS_ZONE_1
-  VPC_AWS_ZONE_2    = var.AWS_ZONE_2
-  VPC_SUBNET1_IP    = var.VPC_SUBNET1_IP
-  VPC_SUBNET2_IP    = var.VPC_SUBNET2_IP
+  VPC_IP                    = var.VPC_IP
+  VPC_AWS_ZONE_1            = var.AWS_ZONE_1
+  VPC_AWS_ZONE_2            = var.AWS_ZONE_2
+  VPC_PUBLIC_SUBNET1_IP     = var.VPC_PUBLIC_SUBNET1_IP
+  VPC_PUBLIC_SUBNET2_IP     = var.VPC_PUBLIC_SUBNET2_IP
+  VPC_PRIVATE_SUBNET1_IP    = var.VPC_PRIVATE_SUBNET1_IP
+  VPC_PRIVATE_SUBNET2_IP    = var.VPC_PRIVATE_SUBNET2_IP
 }
 
 module "load-balancers" {
   source     = "./modules/load-balancers"
 
-  LB_VPC_ID                = module.networks.vpc_id
-  LB_SUBNET_ID_LIST        = module.networks.vpc_public_subnet_id_list
+  LB_VPC_ID                   = module.networks.vpc_id
+  LB_PUBLIC_SUBNET_ID_LIST    = module.networks.vpc_public_subnet_id_list
 }
 
 module "vms" {
@@ -61,7 +63,7 @@ module "vms" {
   EC2_AMI_ID                  = var.EC2_AMI_ID
   EC2_INSTANCE_TYPE           = var.EC2_INSTANCE_TYPE
   EC2_CONTAINERS_IMAGE_URL    = module.image-registries.ecr_repository_url_version
-  EC2_SUBNET_ID_LIST          = module.networks.vpc_public_subnet_id_list
+  EC2_PRIVATE_SUBNET_ID_LIST  = module.networks.vpc_private_subnet_id_list
   EC2_LB_SECURITY_GROUP_LIST  = [module.load-balancers.lb_ec2_security_group_id]
   EC2_LB_TARGET_GROUP_ARN     = module.load-balancers.lb_ec2_target_group_arn
   EC2_LOG_GROUP_NAME          = module.logs.cloudwatch_log_ec2_group_name
@@ -73,7 +75,7 @@ module "containers" {
   ECS_AWS_REGION              = var.AWS_REGION
   ECS_VPC_ID                  = module.networks.vpc_id
   ECS_CONTAINERS_IMAGE_URL    = module.image-registries.ecr_repository_url_version
-  ECS_SUBNET_ID_LIST          = module.networks.vpc_public_subnet_id_list
+  ECS_PRIVATE_SUBNET_ID_LIST  = module.networks.vpc_private_subnet_id_list
   ECS_LB_SECURITY_GROUP_LIST  = [module.load-balancers.lb_ecs_security_group_id]
   ECS_LB_TARGET_GROUP_ARN     = module.load-balancers.lb_ecs_target_group_arn
   ECS_LOG_GROUP_NAME          = module.logs.cloudwatch_log_ecs_group_name

@@ -11,16 +11,24 @@ output "vpc_cidr_block" {
 output "vpc_public_subnet_id_list" {
   description = "List of public subnet IDs"
   value       = [
-    aws_subnet.portfolio_api_subnet_1.id,
-    aws_subnet.portfolio_api_subnet_2.id
+    aws_subnet.portfolio_api_public_subnet_1.id,
+    aws_subnet.portfolio_api_public_subnet_2.id
+  ]
+}
+
+output "vpc_private_subnet_id_list" {
+  description = "List of private subnet IDs"
+  value       = [
+    aws_subnet.portfolio_api_private_subnet_1.id,
+    aws_subnet.portfolio_api_private_subnet_2.id
   ]
 }
 
 output "vpc_availability_zone_list" {
   description = "List of availability zones used for subnets"
   value       = [
-    aws_subnet.portfolio_api_subnet_1.availability_zone,
-    aws_subnet.portfolio_api_subnet_2.availability_zone
+    aws_subnet.portfolio_api_public_subnet_1.availability_zone,
+    aws_subnet.portfolio_api_public_subnet_2.availability_zone
   ]
 }
 
@@ -31,5 +39,5 @@ output "vpc_internet_gateway_id" {
 
 output "vpc_route_table_id" {
   description = "ID of the public route table"
-  value       = aws_route_table.portfolio_api_route_table.id
+  value       = aws_route_table.portfolio_api_public_route_table.id
 }

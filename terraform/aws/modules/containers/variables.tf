@@ -13,7 +13,7 @@ variable "ECS_CONTAINERS_IMAGE_URL"{
   nullable = false
 }
 
-variable "ECS_SUBNET_ID_LIST"{
+variable "ECS_PRIVATE_SUBNET_ID_LIST"{
   type     = list(string)
   nullable = false
 }

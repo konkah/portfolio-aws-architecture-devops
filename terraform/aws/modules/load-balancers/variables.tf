@@ -3,7 +3,7 @@ variable "LB_VPC_ID"{
   nullable = false
 }
 
-variable "LB_SUBNET_ID_LIST"{
+variable "LB_PUBLIC_SUBNET_ID_LIST"{
   type     = list(string)
   nullable = false
 }

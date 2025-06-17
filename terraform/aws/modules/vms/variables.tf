@@ -24,7 +24,7 @@ variable "EC2_CONTAINERS_IMAGE_URL"{
   nullable = false
 }
 
-variable "EC2_SUBNET_ID_LIST"{
+variable "EC2_PRIVATE_SUBNET_ID_LIST"{
   type     = list(string)
   nullable = false
 }

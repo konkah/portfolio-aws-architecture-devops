@@ -1,7 +1,7 @@
 resource "aws_instance" "portfolio_api_ubuntu_instance" {
   ami                         = var.EC2_AMI_ID
   instance_type               = var.EC2_INSTANCE_TYPE
-  subnet_id                   = var.EC2_SUBNET_ID_LIST[0]
+  subnet_id                   = var.EC2_PRIVATE_SUBNET_ID_LIST[0]
   vpc_security_group_ids      = var.EC2_LB_SECURITY_GROUP_LIST
   associate_public_ip_address = true
   iam_instance_profile        = aws_iam_instance_profile.ec2_cloudwatch_profile.name

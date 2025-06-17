@@ -13,12 +13,22 @@ variable "VPC_AWS_ZONE_2"{
   nullable = false
 }
 
-variable "VPC_SUBNET1_IP"{
+variable "VPC_PUBLIC_SUBNET1_IP"{
   type     = string
   nullable = false
 }
 
-variable "VPC_SUBNET2_IP"{
+variable "VPC_PUBLIC_SUBNET2_IP"{
+  type     = string
+  nullable = false
+}
+
+variable "VPC_PRIVATE_SUBNET1_IP"{
+  type     = string
+  nullable = false
+}
+
+variable "VPC_PRIVATE_SUBNET2_IP"{
   type     = string
   nullable = false
 }
