@@ -11,21 +11,23 @@ jobs:
     runs-on: ubuntu-24.04
 
     env:
-      TF_VAR_AWS_ACCESS_KEY_ID:      ${{ secrets.AWS_ACCESS_KEY_ID }}
-      TF_VAR_AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      TF_VAR_AWS_ACCESS_KEY_ID:       ${{ secrets.AWS_ACCESS_KEY_ID }}
+      TF_VAR_AWS_SECRET_ACCESS_KEY:   ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      TF_VAR_AWS_REGION:             ${{ secrets.AWS_REGION }}
-      TF_VAR_AWS_ZONE_1:             ${{ secrets.AWS_ZONE_1 }}
-      TF_VAR_AWS_ZONE_2:             ${{ secrets.AWS_ZONE_2 }}
+      TF_VAR_AWS_REGION:              ${{ secrets.AWS_REGION }}
+      TF_VAR_AWS_ZONE_1:              ${{ secrets.AWS_ZONE_1 }}
+      TF_VAR_AWS_ZONE_2:              ${{ secrets.AWS_ZONE_2 }}
 
-      TF_VAR_VPC_IP:                 ${{ secrets.VPC_IP }}
-      TF_VAR_VPC_SUBNET1_IP:         ${{ secrets.VPC_SUBNET1_IP }}
-      TF_VAR_VPC_SUBNET2_IP:         ${{ secrets.VPC_SUBNET2_IP }}
+      TF_VAR_VPC_IP:                  ${{ secrets.VPC_IP }}
+      TF_VAR_VPC_PUBLIC_SUBNET1_IP:   ${{ secrets.VPC_PUBLIC_SUBNET1_IP }}
+      TF_VAR_VPC_PUBLIC_SUBNET2_IP:   ${{ secrets.VPC_PUBLIC_SUBNET2_IP }}
+      TF_VAR_VPC_PRIVATE_SUBNET1_IP:  ${{ secrets.VPC_PRIVATE_SUBNET1_IP }}
+      TF_VAR_VPC_PRIVATE_SUBNET2_IP:  ${{ secrets.VPC_PRIVATE_SUBNET2_IP }}
 
-      TF_VAR_APP_VERSION:            ${{ secrets.APP_VERSION }}
+      TF_VAR_APP_VERSION:             ${{ secrets.APP_VERSION }}
 
-      TF_VAR_EC2_AMI_ID:             ${{ secrets.EC2_AMI_ID }}
-      TF_VAR_EC2_INSTANCE_TYPE:      ${{ secrets.EC2_INSTANCE_TYPE }}
+      TF_VAR_EC2_AMI_ID:              ${{ secrets.EC2_AMI_ID }}
+      TF_VAR_EC2_INSTANCE_TYPE:       ${{ secrets.EC2_INSTANCE_TYPE }}
 
     steps:
       - name: Checkout Out Repository Code / Create Project Repository Clone
@@ -56,21 +58,23 @@ jobs:
     runs-on: ubuntu-24.04
 
     env:
-      TF_VAR_AWS_ACCESS_KEY_ID:      ${{ secrets.AWS_ACCESS_KEY_ID }}
-      TF_VAR_AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      TF_VAR_AWS_ACCESS_KEY_ID:       ${{ secrets.AWS_ACCESS_KEY_ID }}
+      TF_VAR_AWS_SECRET_ACCESS_KEY:   ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      TF_VAR_AWS_REGION:             ${{ secrets.AWS_REGION }}
-      TF_VAR_AWS_ZONE_1:             ${{ secrets.AWS_ZONE_1 }}
-      TF_VAR_AWS_ZONE_2:             ${{ secrets.AWS_ZONE_2 }}
+      TF_VAR_AWS_REGION:              ${{ secrets.AWS_REGION }}
+      TF_VAR_AWS_ZONE_1:              ${{ secrets.AWS_ZONE_1 }}
+      TF_VAR_AWS_ZONE_2:              ${{ secrets.AWS_ZONE_2 }}
 
-      TF_VAR_VPC_IP:                 ${{ secrets.VPC_IP }}
-      TF_VAR_VPC_SUBNET1_IP:         ${{ secrets.VPC_SUBNET1_IP }}
-      TF_VAR_VPC_SUBNET2_IP:         ${{ secrets.VPC_SUBNET2_IP }}
+      TF_VAR_VPC_IP:                  ${{ secrets.VPC_IP }}
+      TF_VAR_VPC_PUBLIC_SUBNET1_IP:   ${{ secrets.VPC_PUBLIC_SUBNET1_IP }}
+      TF_VAR_VPC_PUBLIC_SUBNET2_IP:   ${{ secrets.VPC_PUBLIC_SUBNET2_IP }}
+      TF_VAR_VPC_PRIVATE_SUBNET1_IP:  ${{ secrets.VPC_PRIVATE_SUBNET1_IP }}
+      TF_VAR_VPC_PRIVATE_SUBNET2_IP:  ${{ secrets.VPC_PRIVATE_SUBNET2_IP }}
 
-      TF_VAR_APP_VERSION:            ${{ secrets.APP_VERSION }}
+      TF_VAR_APP_VERSION:             ${{ secrets.APP_VERSION }}
 
-      TF_VAR_EC2_AMI_ID:             ${{ secrets.EC2_AMI_ID }}
-      TF_VAR_EC2_INSTANCE_TYPE:      ${{ secrets.EC2_INSTANCE_TYPE }}
+      TF_VAR_EC2_AMI_ID:              ${{ secrets.EC2_AMI_ID }}
+      TF_VAR_EC2_INSTANCE_TYPE:       ${{ secrets.EC2_INSTANCE_TYPE }}
 
     steps:
       - name: Wait Before Destroy (10min)
